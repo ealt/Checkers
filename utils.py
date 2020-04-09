@@ -52,9 +52,11 @@ def get_row_viz(row, row_num):
 
 
 def visualize(board):
-    print(get_horizontal_line_viz('top'))
+    num_rows = len(board)
+    num_cols = 2 * len(board[0])
+    print(get_horizontal_line_viz('top', num_cols))
     for row_num, row in enumerate(board):
         print(get_row_viz(row, row_num))
-        if row_num < 7:
-            print(get_horizontal_line_viz('middle'))
-    print(get_horizontal_line_viz('bottom'))
+        if row_num < num_rows-1:
+            print(get_horizontal_line_viz('middle', num_cols))
+    print(get_horizontal_line_viz('bottom', num_cols))
