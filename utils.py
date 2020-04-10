@@ -52,8 +52,8 @@ def get_row_viz(row, row_num):
 
 
 def visualize(board):
-    num_rows = len(board)
-    num_cols = 2 * len(board[0])
+    num_rows, num_cols = board.shape
+    num_cols *= 2
     print(get_horizontal_line_viz('top', num_cols))
     for row_num, row in enumerate(board):
         print(get_row_viz(row, row_num))
