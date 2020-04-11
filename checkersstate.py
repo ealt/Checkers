@@ -6,8 +6,9 @@ import utils
 
 class CheckersState:
 
-    def __init__(self, board=utils.default_board):
+    def __init__(self, board=utils.default_board, active_player=0):
         self._board = np.array(board, dtype=np.int32)
+        self._active_player = active_player
         self._get_moves()
         self._get_positions()
 
@@ -82,6 +83,26 @@ class CheckersState:
             if identity != 0:
                 player = 0 if identity > 0 else 1
                 self._positions[player].add(position)
+
+    def actions(self):
+        actions = []
+        for position in self._positions[self._active_player]:
+            moves = self._moves[position]
+            if abs(self._board[position]) > 1:
+                moves[self._active_player].extend(moves[1-self._active_player])
+            moves = moves[self._active_player]
+            for move, jump in moves:
+                if self._board[move] == 0:
+                    actions.append((position, move, None))
+                elif self._is_oppoent_piece(move) and jump:
+                    actions.append((position, jump, move))
+        return actions
+
+    def _is_oppoent_piece(self, pos):
+        if self._active_player == 0:
+            return self._board[pos] < 0
+        else:
+            return self._board[pos] > 0 
 
     def visualize(self):
         utils.visualize(self._board)
