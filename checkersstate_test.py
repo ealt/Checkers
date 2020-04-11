@@ -36,6 +36,12 @@ class CheckersStateTest(unittest.TestCase):
                               set([(1, 0), (1, 1), (3, 0)]))
         self.assertCountEqual(self._cs._positions, expected_positions)
 
+    def test_actions(self):
+        expected_actions = [((0, 1), [(2, 0)]),
+                            ((2, 1), [(0, 0)]),
+                            ((3, 1), [(2, 0)])]
+        self.assertCountEqual(self._mid_game_cs.actions(), expected_actions)
+
 
 if __name__ == '__main__':
     unittest.main()
