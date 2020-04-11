@@ -7,8 +7,10 @@ class CheckersStateTest(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        test_board = [[0, 2], [-1, -1], [0, 1], [-2, 1]]
-        self._cs = CheckersState(test_board)
+        tiny_board = [[0,2],[-1,-1],[0,1],[-2,1]]
+        self._tiny_state = CheckersState(tiny_board)
+        small_board = [[0,0,0],[-1,0,1],[-1,-1,0],[ 0,2,-1],[-1,-1,0],[-2,0,1]]
+        self._small_state = CheckersState(small_board)
 
     def test_get_moves(self):
         expected_moves = {
@@ -29,24 +31,33 @@ class CheckersStateTest(unittest.TestCase):
             (3, 1): ([((2, 0), (1, 0)), ((2, 1), None)],
                      [])
         }
-        self.assertDictEqual(self._cs._moves, expected_moves)
+        self.assertDictEqual(self._tiny_state._moves, expected_moves)
 
     def test_get_positions(self):
         expected_positions = (set([(0, 1), (2, 1), (3, 1)]),
                               set([(1, 0), (1, 1), (3, 0)]))
-        self.assertCountEqual(self._cs._positions, expected_positions)
+        self.assertCountEqual(self._tiny_state._positions, expected_positions)
 
     def test_actions(self):
-        self._cs._active_player = 0
+        self._tiny_state._active_player = 0
         expected_actions = [((0, 1), (2, 0), (1, 1)),
                             ((2, 1), (0, 0), (1, 1)),
                             ((3, 1), (2, 0), None)]
-        self.assertCountEqual(self._cs.actions(), expected_actions)
-        self._cs._active_player = 1
+        self.assertCountEqual(self._tiny_state.actions(), expected_actions)
+        self._tiny_state._active_player = 1
         expected_actions = [((1, 0), (2, 0), None),
                             ((1, 1), (2, 0), None),
                             ((3, 0), (2, 0), None)]
-        self.assertCountEqual(self._cs.actions(), expected_actions)
+        self.assertCountEqual(self._tiny_state.actions(), expected_actions)
+        self._small_state._active_player = 0
+        expected_actions = [((1, 2), (0, 1), None),
+                            ((1, 2), (0, 2), None),
+                            ((5, 2), (4, 2), None)]
+        self._small_state._active_player = 1
+        expected_actions = [((2, 0), (3, 0), None),
+                            ((3, 2), (4, 2), None),
+                            ((4, 0), (5, 1), None),
+                            ((4, 1), (5, 1), None)]
 
 
 if __name__ == '__main__':
