@@ -7,7 +7,7 @@ class CheckersStateTest(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        test_board = [[0, 2], [-1, -1], [0, 1], [-1, 1]]
+        test_board = [[0, 2], [-1, -1], [0, 1], [-2, 1]]
         self._cs = CheckersState(test_board)
 
     def test_get_moves(self):
