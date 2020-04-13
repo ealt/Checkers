@@ -7,9 +7,17 @@ class CheckersStateTest(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        tiny_board = [[0,2],[-1,-1],[0,1],[-2,1]]
+        tiny_board = [[    0,    2],
+                      [-1,   -1   ],
+                      [    0,    1],
+                      [-2,    1   ]]
         self._tiny_state = CheckersState(tiny_board)
-        small_board = [[0,0,0],[-1,0,1],[-1,-1,0],[ 0,2,-1],[-1,-1,0],[-2,0,1]]
+        small_board = [[    0,    0,    0],
+                       [-1,    0,    1   ],
+                       [   -1,   -1,    0],
+                       [ 0,    2,   -1   ],
+                       [   -1,   -1,    0],
+                       [-2,    0,    1   ]]
         self._small_state = CheckersState(small_board)
 
     def test_get_moves(self):
