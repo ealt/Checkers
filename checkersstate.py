@@ -94,8 +94,8 @@ class CheckersState:
             for move, jump in moves:
                 if self._board[move] == 0:
                     actions.append((position, move, None))
-                elif self._is_oppoent_piece(move) and jump
-                        and self._board[jump] == 0:
+                elif (self._is_oppoent_piece(move) and jump
+                        and self._board[jump] == 0):
                     actions.append((position, jump, move))
         return actions
 
