@@ -19,6 +19,16 @@ class CheckersStateTest(unittest.TestCase):
                        [   -1,   -1,    0],
                        [-2,    0,    1   ]]
         self._small_state = CheckersState(small_board)
+        terminal_board_1 = [[    0,    0],
+                            [-1,   -1   ],
+                            [    0,    0],
+                            [-2,    0   ]]
+        self._terminal_state_1 = CheckersState(terminal_board_1)
+        terminal_board_2 = [[    0,    2],
+                            [ 0,    0   ],
+                            [    0,    1],
+                            [ 0,    1   ]]
+        self._terminal_state_2 = CheckersState(terminal_board_2)
 
     def test_get_moves(self):
         expected_moves = {
@@ -45,6 +55,12 @@ class CheckersStateTest(unittest.TestCase):
         expected_positions = (set([(0, 1), (2, 1), (3, 1)]),
                               set([(1, 0), (1, 1), (3, 0)]))
         self.assertCountEqual(self._tiny_state._positions, expected_positions)
+
+    def test_is_terminal(self):
+        self.assertFalse(self._tiny_state.is_terminal())
+        self.assertFalse(self._small_state.is_terminal())
+        self.assertTrue(self._terminal_state_1.is_terminal())
+        self.assertTrue(self._terminal_state_2.is_terminal())
 
     def test_actions(self):
         self._tiny_state._active_player = 0

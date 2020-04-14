@@ -83,6 +83,9 @@ class CheckersState:
             if identity != 0:
                 player = 0 if identity > 0 else 1
                 self._positions[player].add(position)
+    
+    def is_terminal(self):
+        return min(map(len, self._positions)) == 0
 
     def actions(self):
         actions = []
