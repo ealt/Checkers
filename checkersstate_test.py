@@ -62,6 +62,15 @@ class CheckersStateTest(unittest.TestCase):
         self.assertTrue(self._terminal_state_1.is_terminal())
         self.assertTrue(self._terminal_state_2.is_terminal())
 
+    def test_outcome(self):
+        midgame = (0, 0)
+        player_0_win = (1, -1)
+        player_1_win = (-1, 1)
+        self.assertTupleEqual(self._tiny_state.outcome(), midgame)
+        self.assertTupleEqual(self._small_state.outcome(), midgame)
+        self.assertTupleEqual(self._terminal_state_1.outcome(), player_1_win)
+        self.assertTupleEqual(self._terminal_state_2.outcome(), player_0_win)
+
     def test_actions(self):
         self._tiny_state._active_player = 0
         expected_actions = [((0, 1), (2, 0), (1, 1)),

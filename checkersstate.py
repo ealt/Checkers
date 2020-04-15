@@ -87,6 +87,14 @@ class CheckersState:
     def is_terminal(self):
         return min(map(len, self._positions)) == 0
 
+    def outcome(self):
+        if self.is_terminal():
+            if len(self._positions[0]) > 0:
+                return (1, -1)
+            elif len(self._positions[1]) > 0:
+                return (-1, 1)
+        return (0, 0)
+
     def actions(self):
         actions = []
         for position in self._positions[self._active_player]:
