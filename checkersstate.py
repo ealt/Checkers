@@ -11,6 +11,7 @@ class CheckersState:
         self._active_player = active_player
         self._get_moves()
         self._get_positions()
+        self.is_terminal = min(map(len, self._positions)) == 0
 
     def _get_moves(self):
         self._moves = {}
@@ -83,12 +84,9 @@ class CheckersState:
             if identity != 0:
                 player = 0 if identity > 0 else 1
                 self._positions[player].add(position)
-    
-    def is_terminal(self):
-        return min(map(len, self._positions)) == 0
 
     def outcome(self):
-        if self.is_terminal():
+        if self.is_terminal:
             if len(self._positions[0]) > 0:
                 return (1, -1)
             elif len(self._positions[1]) > 0:

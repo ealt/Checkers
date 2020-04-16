@@ -57,10 +57,10 @@ class CheckersStateTest(unittest.TestCase):
         self.assertCountEqual(self._tiny_state._positions, expected_positions)
 
     def test_is_terminal(self):
-        self.assertFalse(self._tiny_state.is_terminal())
-        self.assertFalse(self._small_state.is_terminal())
-        self.assertTrue(self._terminal_state_1.is_terminal())
-        self.assertTrue(self._terminal_state_2.is_terminal())
+        self.assertFalse(self._tiny_state.is_terminal)
+        self.assertFalse(self._small_state.is_terminal)
+        self.assertTrue(self._terminal_state_1.is_terminal)
+        self.assertTrue(self._terminal_state_2.is_terminal)
 
     def test_outcome(self):
         midgame = (0, 0)
