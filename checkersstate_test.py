@@ -86,11 +86,13 @@ class CheckersStateTest(unittest.TestCase):
         expected_actions = [((1, 2), (0, 1), None),
                             ((1, 2), (0, 2), None),
                             ((5, 2), (4, 2), None)]
+        self.assertCountEqual(self._small_state.actions(), expected_actions)
         self._small_state._active_player = 1
         expected_actions = [((2, 0), (3, 0), None),
                             ((3, 2), (4, 2), None),
                             ((4, 0), (5, 1), None),
                             ((4, 1), (5, 1), None)]
+        self.assertCountEqual(self._small_state.actions(), expected_actions)
 
 
 if __name__ == '__main__':
