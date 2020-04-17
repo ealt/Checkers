@@ -6,7 +6,7 @@ import utils
 
 class CheckersState:
 
-    def __init__(self, board=utils.default_board, active_player=0):
+    def __init__(self, board=utils.default_board, active_player=0, **kwargs):
         self._board = np.array(board, dtype=np.int32)
         self._active_player = active_player
         self._get_moves()
