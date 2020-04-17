@@ -96,17 +96,20 @@ class CheckersState:
     def actions(self):
         actions = []
         for position in self._positions[self._active_player]:
-            moves = self._moves[position]
-            if abs(self._board[position]) > 1:
-                moves[self._active_player].extend(moves[1-self._active_player])
-            moves = moves[self._active_player]
-            for move, jump in moves:
+            for move, jump in self._get_piece_moves(position):
                 if self._board[move] == 0:
                     actions.append((position, move, None))
                 elif (self._is_oppoent_piece(move) and jump
                         and self._board[jump] == 0):
                     actions.append((position, jump, move))
         return actions
+
+    def _get_piece_moves(self, position):
+        for move in self._moves[position][self._active_player]:
+            yield move
+        if abs(self._board[position]) > 1:
+            for move in self._moves[position][1-self._active_player]:
+                yield move
 
     def _is_oppoent_piece(self, pos):
         if self._active_player == 0:
