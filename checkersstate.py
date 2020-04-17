@@ -12,6 +12,7 @@ class CheckersState:
         self._get_moves()
         self._get_positions()
         self.is_terminal = min(map(len, self._positions)) == 0
+        self._get_actions()
 
     def _get_moves(self):
         self._moves = {}
@@ -93,16 +94,15 @@ class CheckersState:
                 return (-1, 1)
         return (0, 0)
 
-    def actions(self):
-        actions = []
+    def _get_actions(self):
+        self.actions = []
         for position in self._positions[self._active_player]:
             for move, jump in self._get_piece_moves(position):
                 if self._board[move] == 0:
-                    actions.append((position, move, None))
+                    self.actions.append((position, move, None))
                 elif (self._is_oppoent_piece(move) and jump
                         and self._board[jump] == 0):
-                    actions.append((position, jump, move))
-        return actions
+                    self.actions.append((position, jump, move))
 
     def _get_piece_moves(self, position):
         for move in self._moves[position][self._active_player]:

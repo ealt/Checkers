@@ -96,13 +96,13 @@ class CheckersStateTest(unittest.TestCase):
                                      ((2, 1), (0, 0), (1, 1)),
                                      ((3, 1), (2, 0), None)]
         self.assertCountEqual(CheckersState(board=tiny_board,
-                                            active_player=0).actions(),
+                                            active_player=0).actions,
                               expected_player_0_actions)
         expected_player_1_actions = [((1, 0), (2, 0), None),
                                      ((1, 1), (2, 0), None),
                                      ((3, 0), (2, 0), None)]
         self.assertCountEqual(CheckersState(board=tiny_board,
-                                            active_player=1).actions(),
+                                            active_player=1).actions,
                               expected_player_1_actions)
 
         small_board = [[    0,    0,    0],
@@ -115,14 +115,14 @@ class CheckersStateTest(unittest.TestCase):
                                      ((1, 2), (0, 2), None),
                                      ((5, 2), (4, 2), None)]
         self.assertCountEqual(CheckersState(board=small_board,
-                                            active_player=0).actions(),
+                                            active_player=0).actions,
                               expected_player_0_actions)
         expected_player_1_actions = [((2, 0), (3, 0), None),
                                      ((3, 2), (4, 2), None),
                                      ((4, 0), (5, 1), None),
                                      ((4, 1), (5, 1), None)]
         self.assertCountEqual(CheckersState(board=small_board,
-                                            active_player=1).actions(),
+                                            active_player=1).actions,
                               expected_player_1_actions)
 
 
