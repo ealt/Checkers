@@ -9,9 +9,13 @@ class CheckersState:
     def __init__(self, board=utils.default_board, active_player=0,
                  jump_piece=None, **kwargs):
         self._board = np.array(board, dtype=np.int32)
+        assert(len(self._board.shape) == 2)
+        assert(active_player in (0, 1))
         self._active_player = active_player
         self._get_moves()
         self._get_positions()
+        if jump_piece:
+            assert(jump_piece in self._positions[self._active_player])
         self._jump_piece = jump_piece
         self._get_actions()
         self._get_is_terminal()

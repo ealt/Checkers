@@ -8,6 +8,37 @@ class CheckersStateTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+    def test_constructor(self):
+        uneven_board = [[0, 0, 0], [0, 0], [0]]
+        with self.assertRaises(ValueError):
+            CheckersState(board=uneven_board)
+        
+        str_board = [['black', 'black'], ['blank', 'blank'], ['red', 'red']]
+        with self.assertRaises(ValueError):
+            CheckersState(board=str_board)
+        
+        one_dim_board = [-1, -1, 0, 0, 1, 1]
+        with self.assertRaises(AssertionError):
+            CheckersState(board=one_dim_board)
+        
+        three_dim_board = [[[-1, -1], [0, 0]], [[0, 0] [1, 1]]]
+        with self.assertRaises(AssertionError):
+            CheckersState(board=three_dim_board)
+        
+        with self.assertRaises(AssertionError):
+            CheckersState(active_player=2)
+
+        board = [[    0,    2],
+                 [ 0,    0   ],
+                 [    0,    0],
+                 [-2,    0   ]]
+        with self.assertRaises(AssertionError):
+            CheckersState(board=board, jump_piece=(0, 0))
+        with self.assertRaises(AssertionError):
+            CheckersState(board=board, active_player=0, jump_piece=(3, 0))
+        with self.assertRaises(AssertionError):
+            CheckersState(board=board, active_player=1, jump_piece=(0, 1))
+
     def test_get_moves(self):
         board = [[    0,    2],
                  [-1,   -1   ],
