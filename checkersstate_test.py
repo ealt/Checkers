@@ -157,6 +157,24 @@ class CheckersStateTest(unittest.TestCase):
                                             active_player=1).actions,
                               expected_player_1_actions)
 
+    def test_jump_actions(self):
+        board = [[    0,    0,    0],
+                 [ 0,    0,    0   ],
+                 [   -1,   -1,    0],
+                 [ 0,    2,    0   ],
+                 [    0,   -1,    0],
+                 [ 0,    0,    0   ]]
+        expected_player_0_actions = [((3, 1), (1, 0), (2, 0)),
+                                     ((3, 1), (1, 2), (2, 1)),
+                                     ((3, 1), (5, 2), (4, 1))]
+        self.assertCountEqual(CheckersState(board=board, active_player=0,
+                                            jump_piece=(3, 1)).actions,
+                              expected_player_0_actions)
+        expected_player_1_actions = [((2, 1), (4, 0), (3, 1))]
+        self.assertCountEqual(CheckersState(board=board, active_player=1,
+                                            jump_piece=(2, 1)).actions,
+                              expected_player_1_actions)
+
 
 if __name__ == '__main__':
     unittest.main()

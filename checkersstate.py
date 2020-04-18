@@ -6,11 +6,13 @@ import utils
 
 class CheckersState:
 
-    def __init__(self, board=utils.default_board, active_player=0, **kwargs):
+    def __init__(self, board=utils.default_board, active_player=0,
+                 jump_piece=None, **kwargs):
         self._board = np.array(board, dtype=np.int32)
         self._active_player = active_player
         self._get_moves()
         self._get_positions()
+        self._jump_piece = jump_piece
         self._get_actions()
         self._get_is_terminal()
 
@@ -104,6 +106,18 @@ class CheckersState:
 
     def _get_actions(self):
         self.actions = []
+        if self._jump_piece:
+            self._get_jump_actions()
+        else:
+            self._get_all_actions()
+
+    def _get_jump_actions(self):
+        for move, jump in self._get_piece_moves(self._jump_piece):
+            if (self._is_oppoent_piece(move) and jump
+                    and self._board[jump] == 0):
+                self.actions.append((self._jump_piece, jump, move))
+
+    def _get_all_actions(self):
         for position in self._positions[self._active_player]:
             for move, jump in self._get_piece_moves(position):
                 if self._board[move] == 0:
