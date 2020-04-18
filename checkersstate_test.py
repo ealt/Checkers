@@ -50,7 +50,7 @@ class CheckersStateTest(unittest.TestCase):
                          [-2,    1   ]]
         self.assertFalse(CheckersState(midgame_board).is_terminal)
 
-        draw_board = [[   0,    0,     0],
+        draw_board = [[    0,    0,    0],
                       [-1,   -1,   -1   ],
                       [   -1,   -1,   -1],
                       [ 1,    1,    1   ],
@@ -79,7 +79,7 @@ class CheckersStateTest(unittest.TestCase):
         self.assertTupleEqual(CheckersState(midgame_board).outcome(),
                               expected_midgame_outcome)
 
-        draw_board = [[   0,    0,     0],
+        draw_board = [[    0,    0,    0],
                       [-1,   -1,   -1   ],
                       [   -1,   -1,   -1],
                       [ 1,    1,    1   ],
@@ -106,7 +106,7 @@ class CheckersStateTest(unittest.TestCase):
                               expected_player_1_win_outcome)
 
     def test_actions(self):
-        draw_board = [[   0,    0,     0],
+        draw_board = [[    0,    0,    0],
                       [-1,   -1,   -1   ],
                       [   -1,   -1,   -1],
                       [ 1,    1,    1   ],
