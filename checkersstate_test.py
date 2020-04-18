@@ -50,6 +50,14 @@ class CheckersStateTest(unittest.TestCase):
                          [-2,    1   ]]
         self.assertFalse(CheckersState(midgame_board).is_terminal)
 
+        draw_board = [[    0,    0,     0],
+                       [-1,   -1,   -1   ],
+                       [   -1,   -1,   -1],
+                       [ 1,    1,    1   ],
+                       [    1,    1,    1],
+                       [ 0,    0,    0   ]]
+        self.assertTrue(CheckersState(draw_board).is_terminal)
+        
         player_0_win_board = [[    0,    2],
                               [ 0,    0   ],
                               [    0,    1],
@@ -71,6 +79,16 @@ class CheckersStateTest(unittest.TestCase):
         self.assertTupleEqual(CheckersState(midgame_board).outcome(),
                               expected_midgame_outcome)
 
+        draw_board = [[    0,    0,     0],
+                       [-1,   -1,   -1   ],
+                       [   -1,   -1,   -1],
+                       [ 1,    1,    1   ],
+                       [    1,    1,    1],
+                       [ 0,    0,    0   ]]
+        expected_draw_outcome = (0, 0)
+        self.assertTupleEqual(CheckersState(draw_board).outcome(),
+                              expected_draw_outcome)
+
         player_0_win_board = [[    0,    2],
                               [ 0,    0   ],
                               [    0,    1],
@@ -88,6 +106,20 @@ class CheckersStateTest(unittest.TestCase):
                               expected_player_1_win_outcome)
 
     def test_actions(self):
+        draw_board = [[    0,    0,     0],
+                       [-1,   -1,   -1   ],
+                       [   -1,   -1,   -1],
+                       [ 1,    1,    1   ],
+                       [    1,    1,    1],
+                       [ 0,    0,    0   ]]
+        expected_draw_actions = []
+        self.assertCountEqual(CheckersState(board=draw_board,
+                                            active_player=0).actions,
+                              expected_draw_actions)
+        self.assertCountEqual(CheckersState(board=draw_board,
+                                            active_player=1).actions,
+                              expected_draw_actions)
+
         tiny_board = [[    0,    2],
                  [-1,   -1   ],
                  [    0,    1],

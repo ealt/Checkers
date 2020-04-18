@@ -11,8 +11,8 @@ class CheckersState:
         self._active_player = active_player
         self._get_moves()
         self._get_positions()
-        self.is_terminal = min(map(len, self._positions)) == 0
         self._get_actions()
+        self._get_is_terminal()
 
     def _get_moves(self):
         self._moves = {}
@@ -88,11 +88,19 @@ class CheckersState:
 
     def outcome(self):
         if self.is_terminal:
-            if len(self._positions[0]) > 0:
+            has_pieces = tuple(map(lambda p: len(p) > 0, self._positions))
+            if has_pieces == (True, False):
+                # player 0 wins
                 return (1, -1)
-            elif len(self._positions[1]) > 0:
+            elif has_pieces == (False, True):
+                # player 1 wins
                 return (-1, 1)
-        return (0, 0)
+            else:
+                # the game is a draw
+                return (0, 0)
+        else:
+            # it is still midgame
+            return (0, 0)
 
     def _get_actions(self):
         self.actions = []
@@ -116,6 +124,16 @@ class CheckersState:
             return self._board[pos] < 0
         else:
             return self._board[pos] > 0 
+
+    def _get_is_terminal(self):
+        self.is_terminal = min(map(len, self._positions)) == 0
+        if len(self.actions) == 0:
+            self._active_player = 1 - self._active_player
+            self._get_actions()
+            if len(self.actions) == 0:
+                self._active_player = 1 - self._active_player
+                self.is_terminal = True
+        
 
     def visualize(self):
         utils.visualize(self._board)
