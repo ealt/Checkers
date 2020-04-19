@@ -111,24 +111,24 @@ class CheckersState:
     def _get_actions(self):
         self.actions = []
         if self._jump_piece:
-            self._get_jump_actions()
+            self._get_jump_actions(self._jump_piece)
         else:
-            self._get_all_actions()
+            for position in self._positions[self._active_player]:
+                self._get_jump_actions(position)
+            if len(self.actions) == 0:
+                for position in self._positions[self._active_player]:
+                    self._get_move_actions(position)
 
-    def _get_jump_actions(self):
-        for move, jump in self._get_piece_moves(self._jump_piece):
+    def _get_jump_actions(self, position):
+        for move, jump in self._get_piece_moves(position):
             if (self._is_oppoent_piece(move) and jump
                     and self._board[jump] == 0):
-                self.actions.append((self._jump_piece, jump, move))
-
-    def _get_all_actions(self):
-        for position in self._positions[self._active_player]:
-            for move, jump in self._get_piece_moves(position):
-                if self._board[move] == 0:
-                    self.actions.append((position, move, None))
-                elif (self._is_oppoent_piece(move) and jump
-                        and self._board[jump] == 0):
-                    self.actions.append((position, jump, move))
+                self.actions.append((position, jump, move))
+    
+    def _get_move_actions(self, position):
+        for move, jump in self._get_piece_moves(position):
+            if self._board[move] == 0:
+                self.actions.append((position, move, None))
 
     def _get_piece_moves(self, position):
         for move in self._moves[position][self._active_player]:

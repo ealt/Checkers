@@ -156,8 +156,7 @@ class CheckersStateTest(unittest.TestCase):
                       [    0,    1],
                       [-2,    1   ]]
         expected_player_0_actions = [((0, 1), (2, 0), (1, 1)),
-                                     ((2, 1), (0, 0), (1, 1)),
-                                     ((3, 1), (2, 0), None)]
+                                     ((2, 1), (0, 0), (1, 1))]
         self.assertCountEqual(CheckersState(board=tiny_board,
                                             active_player=0).actions,
                               expected_player_0_actions)
