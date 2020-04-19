@@ -64,15 +64,15 @@ class CheckersStateTest(unittest.TestCase):
         }
         self.assertDictEqual(CheckersState(board)._moves, expected_moves)
 
-    def test_get_positions(self):
+    def test_get_pieces(self):
         board = [[    0,    2],
                  [-1,   -1   ],
                  [    0,    1],
                  [-2,    1   ]]
-        expected_positions = (set([(0, 1), (2, 1), (3, 1)]),
-                              set([(1, 0), (1, 1), (3, 0)]))
-        self.assertCountEqual(CheckersState(board)._positions,
-                              expected_positions)
+        expected_pieces = (set([(0, 1), (2, 1), (3, 1)]),
+                           set([(1, 0), (1, 1), (3, 0)]))
+        self.assertCountEqual(CheckersState(board)._pieces,
+                              expected_pieces)
 
     def test_is_terminal(self):
         midgame_board = [[    0,    2],

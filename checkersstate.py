@@ -13,9 +13,9 @@ class CheckersState:
         assert(active_player in (0, 1))
         self._active_player = active_player
         self._get_moves()
-        self._get_positions()
+        self._get_pieces()
         if jump_piece:
-            assert(jump_piece in self._positions[self._active_player])
+            assert(jump_piece in self._pieces[self._active_player])
         self._jump_piece = jump_piece
         self._get_actions()
         self._get_is_terminal()
@@ -83,18 +83,18 @@ class CheckersState:
                     moves[1].append(((r+1, c), None))
         return moves
 
-    def _get_positions(self):
-        self._positions = (set(), set())
+    def _get_pieces(self):
+        self._pieces = (set(), set())
         num_rows, num_cols = self._board.shape
         for position in product(range(num_rows), range(num_cols)):
             identity = self._board[position]
             if identity != 0:
                 player = 0 if identity > 0 else 1
-                self._positions[player].add(position)
+                self._pieces[player].add(position)
 
     def outcome(self):
         if self.is_terminal:
-            has_pieces = tuple(map(lambda p: len(p) > 0, self._positions))
+            has_pieces = tuple(map(lambda p: len(p) > 0, self._pieces))
             if has_pieces == (True, False):
                 # player 0 wins
                 return (1, -1)
@@ -113,28 +113,28 @@ class CheckersState:
         if self._jump_piece:
             self._get_jump_actions(self._jump_piece)
         else:
-            for position in self._positions[self._active_player]:
-                self._get_jump_actions(position)
+            for piece in self._pieces[self._active_player]:
+                self._get_jump_actions(piece)
             if len(self.actions) == 0:
-                for position in self._positions[self._active_player]:
-                    self._get_move_actions(position)
+                for piece in self._pieces[self._active_player]:
+                    self._get_move_actions(piece)
 
-    def _get_jump_actions(self, position):
-        for move, jump in self._get_piece_moves(position):
+    def _get_jump_actions(self, piece):
+        for move, jump in self._get_piece_moves(piece):
             if (self._is_oppoent_piece(move) and jump
                     and self._board[jump] == 0):
-                self.actions.append((position, jump, move))
+                self.actions.append((piece, jump, move))
     
-    def _get_move_actions(self, position):
-        for move, jump in self._get_piece_moves(position):
+    def _get_move_actions(self, piece):
+        for move, jump in self._get_piece_moves(piece):
             if self._board[move] == 0:
-                self.actions.append((position, move, None))
+                self.actions.append((piece, move, None))
 
-    def _get_piece_moves(self, position):
-        for move in self._moves[position][self._active_player]:
+    def _get_piece_moves(self, piece):
+        for move in self._moves[piece][self._active_player]:
             yield move
-        if abs(self._board[position]) > 1:
-            for move in self._moves[position][1-self._active_player]:
+        if abs(self._board[piece]) > 1:
+            for move in self._moves[piece][1-self._active_player]:
                 yield move
 
     def _is_oppoent_piece(self, pos):
@@ -144,7 +144,7 @@ class CheckersState:
             return self._board[pos] > 0 
 
     def _get_is_terminal(self):
-        self.is_terminal = min(map(len, self._positions)) == 0
+        self.is_terminal = min(map(len, self._pieces)) == 0
         if len(self.actions) == 0:
             self._active_player = 1 - self._active_player
             self._get_actions()
