@@ -21,7 +21,7 @@ class CheckersStateTest(unittest.TestCase):
         with self.assertRaises(AssertionError):
             CheckersState(board=one_dim_board)
         
-        three_dim_board = [[[-1, -1], [0, 0]], [[0, 0] [1, 1]]]
+        three_dim_board = [[[-1, -1], [0, 0]], [[0, 0], [1, 1]]]
         with self.assertRaises(AssertionError):
             CheckersState(board=three_dim_board)
         
