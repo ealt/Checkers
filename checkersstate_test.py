@@ -210,6 +210,9 @@ class CheckersStateTest(unittest.TestCase):
                          [-1,   -1   ],
                          [    0,    1],
                          [-2,    1   ]]
+        invalid_action = ((0, 1), (0, 0), (2, 0))
+        with self.assertRaises(AssertionError):
+            CheckersState(board=initial_board).result(invalid_action)
         move_action = ((1, 0), (2, 0), None)
         move_result_board = [[    0,    2],
                              [ 0,   -1   ],

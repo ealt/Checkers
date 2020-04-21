@@ -153,7 +153,8 @@ class CheckersState:
                 self._active_player = 1 - self._active_player
                 self.is_terminal = True
     
-    def result(self, action):  
+    def result(self, action):
+        assert action in self.actions
         new_state = copy.deepcopy(self)
         old_piece_pos, new_piece_pos, jumped_piece_pos = action
         new_state._board[old_piece_pos] = 0
