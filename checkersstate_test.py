@@ -205,6 +205,9 @@ class CheckersStateTest(unittest.TestCase):
                                             jump_piece=(2, 1)).actions,
                               expected_player_1_actions)
 
+    def test_eq(self):
+        self.assertTrue(CheckersState() == CheckersState())
+
 
 if __name__ == '__main__':
     unittest.main()

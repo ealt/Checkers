@@ -1,3 +1,5 @@
+import numpy as np
+
 default_board = []
 default_board.extend([[-1 for _ in range(4)] for _ in range(3)])
 default_board.extend([[ 0 for _ in range(4)] for _ in range(2)])
@@ -60,3 +62,18 @@ def visualize(board):
         if row_num < num_rows-1:
             print(get_horizontal_line_viz('middle', num_cols))
     print(get_horizontal_line_viz('bottom', num_cols))
+
+def eq(a, b):
+    if not (hasattr(a, '__iter__') or type(a) == str):
+        return a == b
+    try:
+        if not len(a) == len(b):
+            return False
+        if type(a) == np.ndarray:
+            return np.array_equal(a, b)
+        if isinstance(a, dict):
+            return all(eq(v, b[k]) for k, v in a.items())
+        else:
+            return all(eq(a_i, b_i) for a_i, b_i in zip(a, b))
+    except (TypeError, KeyError):
+        return False

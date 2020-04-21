@@ -151,10 +151,15 @@ class CheckersState:
             if len(self.actions) == 0:
                 self._active_player = 1 - self._active_player
                 self.is_terminal = True
-        
 
     def visualize(self):
         utils.visualize(self._board)
+    
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return utils.eq(self.__dict__, other.__dict__)
+        else:
+            return False    
 
 
 if __name__ == '__main__':
