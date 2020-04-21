@@ -1,4 +1,5 @@
 from itertools import product
+import copy
 import numpy as np
 import utils
 
@@ -151,6 +152,24 @@ class CheckersState:
             if len(self.actions) == 0:
                 self._active_player = 1 - self._active_player
                 self.is_terminal = True
+    
+    def result(self, action):  
+        new_state = copy.deepcopy(self)
+        old_piece_pos, new_piece_pos, jumped_piece_pos = action
+        new_state._board[old_piece_pos] = 0
+        new_state._board[new_piece_pos] = self._board[old_piece_pos]
+        new_state._pieces[self._active_player].remove(old_piece_pos)
+        new_state._pieces[self._active_player].add(new_piece_pos)
+        if jumped_piece_pos:
+            new_state._board[jumped_piece_pos] = 0
+            new_state._pieces[1 - self._active_player].remove(jumped_piece_pos)
+            new_state._jump_piece = new_piece_pos
+        else:
+            new_state._active_player = 1 - self._active_player
+            new_state._jump_piece = None
+        new_state._get_actions()
+        new_state._get_is_terminal()
+        return new_state
 
     def visualize(self):
         utils.visualize(self._board)

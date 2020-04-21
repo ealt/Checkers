@@ -205,6 +205,30 @@ class CheckersStateTest(unittest.TestCase):
                                             jump_piece=(2, 1)).actions,
                               expected_player_1_actions)
 
+    def test_result(self):
+        initial_board = [[    0,    2],
+                         [-1,   -1   ],
+                         [    0,    1],
+                         [-2,    1   ]]
+        move_action = ((1, 0), (2, 0), None)
+        move_result_board = [[    0,    2],
+                             [ 0,   -1   ],
+                             [   -1,    1],
+                             [-2,    1   ]]
+        self.assertEqual(CheckersState(board=initial_board, active_player=1,
+                                       jump_piece=None).result(move_action),
+                         CheckersState(board=move_result_board, active_player=0,
+                                       jump_piece=None))
+        jump_action = ((0, 1), (2, 0), (1, 1))
+        jump_result_board = [[    0,    0],
+                             [-1,    0   ],
+                             [    2,    1],
+                             [-2,    1   ]]
+        self.assertEqual(CheckersState(board=initial_board, active_player=0,
+                                       jump_piece=None).result(jump_action),
+                         CheckersState(board=jump_result_board, active_player=0,
+                                       jump_piece=(2,0)))
+
     def test_eq(self):
         self.assertTrue(CheckersState() == CheckersState())
 
