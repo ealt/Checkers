@@ -69,10 +69,12 @@ def eq(a, b):
     try:
         if not len(a) == len(b):
             return False
-        if type(a) == np.ndarray:
+        elif type(a) == np.ndarray:
             return np.array_equal(a, b)
-        if isinstance(a, dict):
+        elif isinstance(a, dict):
             return all(eq(v, b[k]) for k, v in a.items())
+        elif isinstance(a, set):
+            return a.symmetric_difference(b) == set()
         else:
             return all(eq(a_i, b_i) for a_i, b_i in zip(a, b))
     except (TypeError, KeyError):
