@@ -158,7 +158,7 @@ class CheckersState:
         new_state = copy.deepcopy(self)
         old_piece_pos, new_piece_pos, jumped_piece_pos = action
         new_state._board[old_piece_pos] = 0
-        new_state._board[new_piece_pos] = self._board[old_piece_pos]
+        new_state._board[new_piece_pos] = self._get_piece_identity(action)
         new_state._pieces[self._active_player].remove(old_piece_pos)
         new_state._pieces[self._active_player].add(new_piece_pos)
         if jumped_piece_pos:
@@ -171,6 +171,20 @@ class CheckersState:
         new_state._get_actions()
         new_state._get_is_terminal()
         return new_state
+    
+    def _get_piece_identity(self, action):
+        old_piece_pos, new_piece_pos, _ = action
+        old_identity = self._board[old_piece_pos]
+        if (abs(old_identity) == 1
+            and self._promote_piece(old_identity, new_piece_pos)):
+            old_identity *= 2
+        return old_identity
+
+    def _promote_piece(self, old_identity, new_piece_pos):
+        new_piece_row = new_piece_pos[0]
+        goal_rows = {1: 0, -1: len(self._board)-1}
+        return (old_identity in goal_rows
+                and new_piece_row == goal_rows[old_identity])
 
     def visualize(self):
         utils.visualize(self._board)

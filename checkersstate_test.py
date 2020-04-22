@@ -231,6 +231,21 @@ class CheckersStateTest(unittest.TestCase):
                                        jump_piece=None).result(jump_action),
                          CheckersState(board=jump_result_board, active_player=0,
                                        jump_piece=(2,0)))
+        promotion_action = ((2, 1), (0, 0), (1, 1))
+        promotion_result_board = [[    2,    2],
+                                  [-1,    0   ],
+                                  [    0,    0],
+                                  [-2,    1   ]]
+        print(CheckersState(board=initial_board, active_player=0,
+                                       jump_piece=None).result(
+                                           promotion_action)._pieces)
+        print(CheckersState(board=promotion_result_board,
+                                       active_player=0, jump_piece=(0, 0))._pieces)
+        self.assertEqual(CheckersState(board=initial_board, active_player=0,
+                                       jump_piece=None).result(
+                                           promotion_action),
+                         CheckersState(board=promotion_result_board,
+                                       active_player=0, jump_piece=(0, 0)))
 
     def test_eq(self):
         self.assertTrue(CheckersState() == CheckersState())
