@@ -236,11 +236,6 @@ class CheckersStateTest(unittest.TestCase):
                                   [-1,    0   ],
                                   [    0,    0],
                                   [-2,    1   ]]
-        print(CheckersState(board=initial_board, active_player=0,
-                                       jump_piece=None).result(
-                                           promotion_action)._pieces)
-        print(CheckersState(board=promotion_result_board,
-                                       active_player=0, jump_piece=(0, 0))._pieces)
         self.assertEqual(CheckersState(board=initial_board, active_player=0,
                                        jump_piece=None).result(
                                            promotion_action),
