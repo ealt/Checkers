@@ -81,6 +81,47 @@ class CheckersStateTest(unittest.TestCase):
                          [-2,    1   ]]
         self.assertFalse(CheckersState(midgame_board).is_terminal)
 
+        # both player still have pieces
+        # active player does have any available actions
+        # opponent does not have any available actions
+        no_active_action_board = [[    0,    2],
+                                  [-1,    0   ],
+                                  [   -1,    1],
+                                  [-2,    1   ]]
+        no_active_action_state = CheckersState(no_active_action_board,
+                                               active_player=1)
+        self.assertFalse(no_active_action_state.is_terminal)
+        self.assertEqual(no_active_action_state._active_player, 0)
+
+        # both player still have pieces
+        # active player just made a jump, but does not have further jumps
+        # opponent does have available actions
+        postjump_board = [[    2,    2],
+                          [-1,    0   ],
+                          [    0,    0],
+                          [-2,    1   ]]
+        postjump_state = CheckersState(board=postjump_board, active_player=0,
+                                       jump_piece=(0,0))
+        self.assertFalse(postjump_state.is_terminal)
+        self.assertEqual(postjump_state._active_player, 1)
+        self.assertIsNone(postjump_state._jump_piece)
+        
+        # both player still have pieces
+        # active player just made a jump, but does not have further jumps
+        # opponent does not have any available actions
+        # active player does have avalable actions
+        postjump_no_opponent_actions_board = [[    2,    2],
+                                              [ 0,    0   ],
+                                              [   -1,    0],
+                                              [-2,    1   ]]
+        postjump_no_opponent_actions_state = CheckersState(
+                board=postjump_no_opponent_actions_board,
+                active_player=0,
+                jump_piece=(0,0))
+        self.assertFalse(postjump_no_opponent_actions_state.is_terminal)
+        self.assertEqual(postjump_no_opponent_actions_state._active_player, 0)
+        self.assertIsNone(postjump_no_opponent_actions_state._jump_piece)
+
         draw_board = [[    0,    0,    0],
                       [-1,   -1,   -1   ],
                       [   -1,   -1,   -1],

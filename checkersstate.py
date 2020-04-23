@@ -148,12 +148,15 @@ class CheckersState:
 
     def _get_is_terminal(self):
         self.is_terminal = min(map(len, self._pieces)) == 0
-        if len(self.actions) == 0:
+        if not self.is_terminal and len(self.actions) == 0:
             self._active_player = 1 - self._active_player
+            self._jump_piece = None
             self._get_actions()
             if len(self.actions) == 0:
                 self._active_player = 1 - self._active_player
-                self.is_terminal = True
+                self._get_actions()
+                if len(self.actions) == 0:
+                    self.is_terminal = True
     
     def result(self, action):
         assert action in self.actions
