@@ -13,3 +13,13 @@ Notable choices made for this implementation include:
 * after an initial jump, the piece that performed a jump must continue making jump moves as long as they are available
 * if a player does not have any available actions, their turn is passed
 * if neither player has any available actions, the game ends in a draw
+
+## Getting started
+The environment can be installed cloning this project:
+```
+$ git clone https://github.com/ealt/Checkers.git
+```
+The code was developed using **Python 3.5.4**, to ensure it works for your system you can run the suite of unit tests:
+```
+$ python checkerstate_test.py
+```
