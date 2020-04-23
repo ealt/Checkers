@@ -11,6 +11,9 @@ class CheckersState:
                  jump_piece=None, **kwargs):
         self._board = np.array(board, dtype=np.int32)
         assert(len(self._board.shape) == 2)
+        # pylint/issues/3139
+        self._num_rows = self._board.shape[0]  # pylint: disable=E1136  
+        self._num_cols = self._board.shape[1]  # pylint: disable=E1136
         assert(active_player in (0, 1))
         self._active_player = active_player
         self._get_moves()
@@ -23,14 +26,14 @@ class CheckersState:
 
     def _get_moves(self):
         self._moves = {}
-        num_rows, num_cols = self._board.shape
-        for position in product(range(num_rows), range(num_cols)):
+        for position in product(range(self._num_rows), range(self._num_cols)):
             self._moves[position] = self._get_moves_from_position(position)
 
 
     def _get_moves_from_position(self, position):
         r, c = position
-        r_max, c_max = (n-1 for n in self._board.shape)
+        r_max = self._num_rows - 1
+        c_max = self._num_cols - 1
         # moves: (upward moves, downward moves)
         # move: (empty space move, jump move)
         moves = ([], [])
@@ -86,8 +89,7 @@ class CheckersState:
 
     def _get_pieces(self):
         self._pieces = (set(), set())
-        num_rows, num_cols = self._board.shape
-        for position in product(range(num_rows), range(num_cols)):
+        for position in product(range(self._num_rows), range(self._num_cols)):
             identity = self._board[position]
             if identity != 0:
                 player = 0 if identity > 0 else 1
@@ -127,7 +129,7 @@ class CheckersState:
                 self.actions.append((piece, jump, move))
     
     def _get_move_actions(self, piece):
-        for move, jump in self._get_piece_moves(piece):
+        for move, _ in self._get_piece_moves(piece):
             if self._board[move] == 0:
                 self.actions.append((piece, move, None))
 
