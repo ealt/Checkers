@@ -23,3 +23,30 @@ The code was developed using **Python 3.5.4**, to ensure it works for your syste
 ```
 $ python checkerstate_test.py
 ```
+
+## Creating a game state
+checkersstate.py defines the `CheckersState` class.
+To simulate play, start by created an initial `CheckersState` game state. With no arguments, the default starting state described in the overview is created. The following optional arguments can be used to create different states:
+* `board`: accepts a rectangular numeric list or array
+  * passing an rxc array creates an rx2c board 
+  * rows in the array correspond to rows of the board
+  * columns are represented in a compressed format, removing inacessible spaces
+  * the values in the array (coerced to integers) denote the occupancy of each space on the board
+    * zeros are empty spaces
+    * positive numbers are pieces belonging to player 0
+    * negative numbers are pieces belonging to player 1
+    * pieces with an absolute value of 1 are ordinary pieces (must advance forward)
+    * pieces with absolute values greater than 1 are king pieces (can move in any direction)
+* `active_player`: can be 0 (default) or 1 to denote whose turn it is
+* `jump_piece`: can be None (default) or the board position tuple for a piece that just completed a jump
+For example:
+```
+my_state = CheckersState(board=[[    2,    0],  # 5x2 array creates a 5x4 board
+                                [-1,    0   ],  # an ordinary piece belonging to player 1 at position (1, 0)
+                                [   -1,    0],  # row 2, the space at position (2, 1) is empty
+                                [-2,    1   ],  # player 1 king, player 0 ordinary piece
+                                [    1,    0]], # even rows shift right, odd rows shift left
+                         active_player=1,       # it is player 1's turn
+                         jump_piece=(2, 0))     # the piece at (2, 0) just made a jump, in this state
+                                                #   player 1 must use this piece to make the jump to (4, 1)
+```
