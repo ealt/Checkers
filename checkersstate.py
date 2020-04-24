@@ -96,7 +96,7 @@ class CheckersState:
                 self._pieces[player].add(position)
 
     def outcome(self):
-        if self.is_terminal:
+        if self._is_terminal:
             has_pieces = tuple(map(lambda p: len(p) > 0, self._pieces))
             if has_pieces == (True, False):
                 # player 0 wins
@@ -112,13 +112,13 @@ class CheckersState:
             return (0, 0)
 
     def _get_actions(self):
-        self.actions = []
+        self._actions = []
         if self._jump_piece:
             self._get_jump_actions(self._jump_piece)
         else:
             for piece in self._pieces[self._active_player]:
                 self._get_jump_actions(piece)
-            if len(self.actions) == 0:
+            if len(self._actions) == 0:
                 for piece in self._pieces[self._active_player]:
                     self._get_move_actions(piece)
 
@@ -126,12 +126,12 @@ class CheckersState:
         for move, jump in self._get_piece_moves(piece):
             if (self._is_oppoent_piece(move) and jump
                     and self._board[jump] == 0):
-                self.actions.append((piece, jump, move))
+                self._actions.append((piece, jump, move))
     
     def _get_move_actions(self, piece):
         for move, _ in self._get_piece_moves(piece):
             if self._board[move] == 0:
-                self.actions.append((piece, move, None))
+                self._actions.append((piece, move, None))
 
     def _get_piece_moves(self, piece):
         for move in self._moves[piece][self._active_player]:
@@ -147,19 +147,19 @@ class CheckersState:
             return self._board[pos] > 0 
 
     def _get_is_terminal(self):
-        self.is_terminal = min(map(len, self._pieces)) == 0
-        if not self.is_terminal and len(self.actions) == 0:
+        self._is_terminal = min(map(len, self._pieces)) == 0
+        if not self._is_terminal and len(self._actions) == 0:
             self._active_player = 1 - self._active_player
             self._jump_piece = None
             self._get_actions()
-            if len(self.actions) == 0:
+            if len(self._actions) == 0:
                 self._active_player = 1 - self._active_player
                 self._get_actions()
-                if len(self.actions) == 0:
-                    self.is_terminal = True
+                if len(self._actions) == 0:
+                    self._is_terminal = True
     
     def result(self, action):
-        assert action in self.actions
+        assert action in self._actions
         new_state = copy.deepcopy(self)
         old_piece_pos, new_piece_pos, jumped_piece_pos = action
         new_state._board[old_piece_pos] = 0
@@ -190,6 +190,15 @@ class CheckersState:
         goal_rows = {1: 0, -1: len(self._board)-1}
         return (old_identity in goal_rows
                 and new_piece_row == goal_rows[old_identity])
+
+    def active_player(self):
+        return self._active_player
+
+    def actions(self):
+        return self._actions
+
+    def is_terminal(self):
+        return self._is_terminal
 
     def visualize(self):
         utils.visualize(self._board)

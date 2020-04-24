@@ -53,12 +53,13 @@ my_state = CheckersState(board=[[    2,    0],  # 5x2 array creates a 5x4 board
 
 ## Interacting with a game state
 Agents can observe and act in a state as follows:
-* `my_state.actions`: is the list of actions available to the active player. Each action has 3 elements:
+* `my_state.active_player()`: returns the identity of the active player in the state (0 or 1)
+* `my_state.actions()`: returns the list of actions available to the active player. Each action has 3 elements:
   * the position of the piece that would move
   * the new position of the piece after the move
   * the position of an opponent's piece that is jumped (or None)
 * `my_state.outcome(action)`: returns the state resulting the active player taking the action `action`
-* `my_state.is_terminal`: is a boolean indicating whether the state is a terminal game state
+* `my_state.is_terminal()`: returns a boolean indicating whether the state is a terminal game state
 * `my_state.outcome()`: returns a tuple with the payoffs for player 0 and 1 respectively. the values can be:
   * `0`: if the game has not ended, or it has ended in a draw
   * `1`: the player won the game
