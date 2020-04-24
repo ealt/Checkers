@@ -26,7 +26,7 @@ $ python checkerstate_test.py
 
 ## Creating a game state
 checkersstate.py defines the `CheckersState` class.
-To simulate play, start by created an initial `CheckersState` game state. With no arguments, the default starting state described in the overview is created. The following optional arguments can be used to create different states:
+To simulate play, start by creating an initial `CheckersState` game state. With no arguments, the default starting state described in the overview is created. The following optional arguments can be used to create different states:
 * `board`: accepts a rectangular numeric list or array
   * passing an rxc array creates an rx2c board 
   * rows in the array correspond to rows of the board
