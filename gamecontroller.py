@@ -1,4 +1,4 @@
-from agent import Agent
+from agent import Agent, HumanCheckersAgent
 from checkersstate import State, CheckersState
 
 class GameController:
@@ -15,3 +15,9 @@ class GameController:
             action = self._agents[active_idx].get_action(self._state)
             self._state = self._state.result(action)
         return self._state.outcome()
+
+
+if __name__ == '__main__':
+    gc = GameController(CheckersState(),
+                        [HumanCheckersAgent(), HumanCheckersAgent()])
+    print(gc.play_game())
