@@ -4,8 +4,24 @@ import numpy as np
 import utils
 
 
+class State:
+    def active_player(self):
+        raise NotImplementedError
 
-class CheckersState:
+    def actions(self):
+        raise NotImplementedError
+
+    def result(self, action):
+        raise NotImplementedError
+
+    def is_terminal(self):
+        raise NotImplementedError
+
+    def outcome(self):
+        raise NotImplementedError
+
+
+class CheckersState(State):
 
     def __init__(self, board=utils.default_board, active_player=0,
                  jump_piece=None, **kwargs):
