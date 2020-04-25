@@ -29,6 +29,11 @@ space_characters = {
 
 }
 
+def get_column_labels_viz(num_spaces=8, space_width=3):
+    return (' ' + ' '.join([' ' + chr(65 + col) + ' '
+                            for col in range(num_spaces)]))
+
+
 def get_horizontal_line_viz(vertical_pos, num_spaces=8, space_width=3):
     return (line_characters[(vertical_pos, 'left')]
             + (space_width * line_characters['horizontal']
@@ -46,22 +51,28 @@ def get_spaces_viz(identity, row_num):
                 + line_characters['vertical']
                 + space_characters['off'])
 
-def get_row_viz(row, row_num):
-    return (line_characters['vertical']
+def get_row_viz(row, row_num, row_label=None):
+    return (row_label + ' ' + line_characters['vertical']
             + line_characters['vertical'].join(
                 [get_spaces_viz(identity, row_num) for identity in row])
-            + line_characters['vertical'])
+            + line_characters['vertical'] + ' ' + row_label)
 
 
 def visualize(board):
-    num_rows, num_cols = board.shape
-    num_cols *= 2
-    print(get_horizontal_line_viz('top', num_cols))
+    num_rows = board.shape[0]
+    num_cols = board.shape[1] * 2
+    label_w = int(np.floor(np.log10(num_rows))) + 1
+    pad = ' ' * label_w
+    print(pad, get_column_labels_viz(num_cols))
+    print(pad, get_horizontal_line_viz('top', num_cols))
     for row_num, row in enumerate(board):
-        print(get_row_viz(row, row_num))
+        row_label = str(num_rows - row_num)
+        row_label += ' ' * (label_w - len(row_label))
+        print(get_row_viz(row, row_num, row_label))
         if row_num < num_rows-1:
-            print(get_horizontal_line_viz('middle', num_cols))
-    print(get_horizontal_line_viz('bottom', num_cols))
+            print(pad, get_horizontal_line_viz('middle', num_cols))
+    print(pad, get_horizontal_line_viz('bottom', num_cols))
+    print(pad, get_column_labels_viz(num_cols))
 
 def eq(a, b):
     if not (hasattr(a, '__iter__') or type(a) == str):
