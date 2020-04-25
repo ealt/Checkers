@@ -5,9 +5,6 @@ from checkersstate import CheckersState
 
 class CheckersStateTest(unittest.TestCase):
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
     def test_constructor(self):
         uneven_board = [[0, 0, 0], [0, 0], [0]]
         with self.assertRaises(ValueError):
