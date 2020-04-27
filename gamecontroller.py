@@ -20,4 +20,11 @@ class GameController:
 if __name__ == '__main__':
     gc = GameController(CheckersState(),
                         [HumanCheckersAgent(), HumanCheckersAgent()])
-    print(gc.play_game())
+    outcome = gc.play_game()
+    gc._state.visualize()
+    if outcome == (1, -1):
+        print('Player 1 wins!')
+    elif outcome == (-1, 1):
+        print('Player 2 wins!')
+    elif outcome == (0, 0):
+        print('The game is a draw.')
