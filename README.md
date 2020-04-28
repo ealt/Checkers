@@ -22,9 +22,25 @@ $ git clone https://github.com/ealt/Checkers.git
 The code was developed using **Python 3.5.4**, to ensure it works for your system you can run the suite of unit tests:
 ```
 $ python checkerstate_test.py
+$ python gamecontroller_test.py
 ```
 
-## Creating a game state
+## Playing a game
+gamecontroller.py defines the `GameController` glass.
+To coordinate a game between a pair of agents, create an instance of `GameController` passing in the arguments:
+* `state`: accepts an instance of a game state (described in the Checkers State section below) as the initial state of the game
+* `agents`: appects a pair of two agent instances as opposing players in the game
+After creating a `GameController` instance, call the method `play_game()` to simulate a game to completion. The controller will solicit actions from each agent when it is their turn and use those actions to evolve tha game state until a terminal state is reached. At that point, the method will return the final game state outcome.
+
+By default, simply running gameconroller.py from the command line:
+```
+$ python gamecontroller.py
+```
+will start a standard game of checkers between two human players who select from available actions presented to them in the command line for each state.
+
+## Checkers State
+
+# Creating a game state
 checkersstate.py defines the `CheckersState` class.
 To simulate play, start by creating an initial `CheckersState` game state. With no arguments, the default starting state described in the overview is created. The following optional arguments can be used to create different states:
 * `board`: accepts a rectangular numeric list or array
@@ -51,8 +67,8 @@ my_state = CheckersState(board=[[    2,    0],  # 5x2 array creates a 5x4 board
                                                 #   player 1 must use this piece to make the jump to (4, 1)
 ```
 
-## Interacting with a game state
-Agents can observe and act in a state as follows:
+# Interacting with a game state
+Game controllers and agents can observe and act in a state as follows:
 * `my_state.active_player()`: returns the identity of the active player in the state (0 or 1)
 * `my_state.actions()`: returns the list of actions available to the active player. Each action has 3 elements:
   * the position of the piece that would move
