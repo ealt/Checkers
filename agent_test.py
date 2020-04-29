@@ -1,6 +1,6 @@
 import unittest
 
-from agent import Agent, PreprogrammedAgent, RandomAgent
+from agent import Agent, GreedyAgent, PreprogrammedAgent, RandomAgent
 from checkersstate import State, CheckersState
 
 
@@ -45,6 +45,13 @@ class CheckersStateTest(unittest.TestCase):
         invalid_action = 4
         with self.assertRaises(AssertionError):
             PreprogrammedAgent([invalid_action]).get_action(state)
+
+    def test_greedy_agent(self):
+        agent = GreedyAgent(score=lambda state: state.score)
+        state = DummyState(state_subtree={1: {'score': 2},
+                                          2: {'score': 3},
+                                          3: {'score': 1}})
+        self.assertEqual(agent.get_action(state), 2)
 
     def test_random_agent(self):
         state = CheckersState()

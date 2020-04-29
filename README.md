@@ -43,6 +43,7 @@ will start a standard game of checkers between two human players who select from
 agent.py defines different variants of game playing agents. There are all derived from the `Agent` abstact base class, and must implement a `get_action()` method which accepts a game state (described below in the Checkers State section) and return an action available in that state. The agent variants currently implemented are:
 * `PreprogrammedAgent`: this agent is initialized with a list of actions and returns them in order with each call to `get_action()`
 * `RandomAgent`: picks an available action at random with each call to `get_action()`
+* `GreedyAgent`: picks an available action that produces a state with the maximum value according to a score function with each call to `get_action()`. This score function is passed as an argument when instantiating the greedy agent, it must accept a game state as its singular argument and return a numeric value.
 * `HumanCheckersAgent`: displays the board state and a list of available actions to the command line, and returns the action selected by the user in the command line with each call to `get_action()`
 
 ## Checkers State

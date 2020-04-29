@@ -19,6 +19,16 @@ class RandomAgent(Agent):
     def get_action(self, state):
         return choice(state.actions())
 
+
+class GreedyAgent(Agent):
+    def __init__(self, score):
+        self._score = score
+    
+    def get_action(self, state):
+        return max(state.actions(),
+                   key=lambda action: self._score(state.result(action)))
+
+
 class HumanCheckersAgent(Agent):
     def get_action(self, state):
         self._num_rows = state._board.shape[0]
