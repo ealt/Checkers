@@ -5,23 +5,27 @@ from checkersstate import State, CheckersState
 
 
 class DummyState(State):
-    def __init__(self, available_actions):
-        self._available_actions = available_actions
+    def __init__(self, active_player=None, state_subtree={}, score=None,
+                 **kwargs):
+        self._active_player = active_player
+        self._state_subtree = state_subtree
+        self.score = score
 
     def active_player(self):
-        pass
+        return self._active_player
 
     def actions(self):
-        return self._available_actions
+        return self._state_subtree.keys()
 
     def result(self, action):
-        pass
+        return DummyState(**self._state_subtree[action])
 
     def is_terminal(self):
-        pass
+        return len(self._state_subtree) == 0
 
     def outcome(self):
-        pass
+        return self.score
+
 
 class CheckersStateTest(unittest.TestCase):
 
@@ -31,7 +35,8 @@ class CheckersStateTest(unittest.TestCase):
 
     def test_preprogrammed_agent(self):
         available_actions = [1, 2, 3]
-        state = DummyState(available_actions)
+        state_subtree = {action: {} for action in available_actions}
+        state = DummyState(state_subtree=state_subtree)
         preprogrammed_actions = [2, 1, 1, 3, 2, 3]
         agent = PreprogrammedAgent(preprogrammed_actions)
         for expected_action in preprogrammed_actions:
