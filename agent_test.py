@@ -72,28 +72,16 @@ class AgentTest(unittest.TestCase):
                             'active_player': 2,
                             'score': (1, 2, 6),
                             'state_subtree': {
-                                'a': {
-                                    'active_player': 1,
-                                    'score': (1, 2, 6)
-                                },
-                                'b': {
-                                    'active_player': 1,
-                                    'score': (4, 2, 3)
-                                }
+                                'a': {'score': (1, 2, 6)},
+                                'b': {'score': (4, 2, 3)}
                             }
                         },
                         'b': {
                             'active_player': 1,
                             'score': (7, 4, 1),
                             'state_subtree': {
-                                'a': {
-                                    'active_player': 2,
-                                    'score': (6, 1, 2)
-                                },
-                                'b': {
-                                    'active_player': 0,
-                                    'score': (7, 4, 1)
-                                }
+                                'a': {'score': (6, 1, 2)},
+                                'b': {'score': (7, 4, 1)}
                             }
                         }
                     }
@@ -106,28 +94,16 @@ class AgentTest(unittest.TestCase):
                             'active_player': 2,
                             'score': (1, 5, 2),
                             'state_subtree': {
-                                'a': {
-                                    'active_player': 0,
-                                    'score': (5, 1, 1)
-                                },
-                                'b': {
-                                    'active_player': 0,
-                                    'score': (1, 5, 2)
-                                }
+                                'a': {'score': (5, 1, 1)},
+                                'b': {'score': (1, 5, 2)}
                             }
                         },
                         'b': {
                             'active_player': 0,
                             'score': (7, 7, 1),
                             'state_subtree': {
-                                'a': {
-                                    'active_player': 2,
-                                    'score': (7, 7, 1)
-                                },
-                                'b': {
-                                    'active_player': 1,
-                                    'score': (5, 4, 5)
-                                }
+                                'a': {'score': (7, 7, 1)},
+                                'b': {'score': (5, 4, 5)}
                             }
                         }
                     }
