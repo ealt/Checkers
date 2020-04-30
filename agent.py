@@ -29,6 +29,25 @@ class GreedyAgent(Agent):
                    key=lambda action: self._score(state.result(action)))
 
 
+class BFSAgent(Agent):
+    def __init__(self, score, max_depth=3):
+        self._score = score
+        self._max_depth = max_depth
+    
+    def get_action(self, state):
+        return max(state.actions(), key=lambda action:
+                   self._max_value(state.result(action),
+                                   self._max_depth - 1)[state.active_player()])
+    
+    def _max_value(self, state, depth):
+        if depth <= 0 or state.is_terminal():
+            return self._score(state)
+        else:
+            values = [self._max_value(state.result(action), depth - 1)
+                      for action in state.actions()]
+            return max(values, key=lambda v: v[state.active_player()])        
+
+
 class HumanCheckersAgent(Agent):
     def get_action(self, state):
         self._num_rows = state._board.shape[0]
