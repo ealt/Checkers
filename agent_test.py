@@ -27,7 +27,7 @@ class DummyState(State):
         return self.score
 
 
-class CheckersStateTest(unittest.TestCase):
+class AgentTest(unittest.TestCase):
 
     def test_base_agent(self):
         with self.assertRaises(NotImplementedError):
