@@ -44,6 +44,7 @@ agent.py defines different variants of game playing agents. There are all derive
 * `PreprogrammedAgent`: this agent is initialized with a list of actions and returns them in order with each call to `get_action()`
 * `RandomAgent`: picks an available action at random with each call to `get_action()`
 * `GreedyAgent`: picks an available action that produces a state with the maximum value according to a score function with each call to `get_action()`. This score function is passed as an argument when instantiating the greedy agent, it must accept a game state as its singular argument and return a numeric value.
+* `BFSAgent`: performs a breadth first search of the state tree to a certain depth (can be set using the `max_depth` argument, default = 3), scores the leaves of this subtree as a tuple with values for each agent according to a score function that must be passed as an argument when instantiating the BFS agent, propogates these scores up the tree assuming the active agent at each state chooses the action to maximize its score, finally returning the action which produces the child of the root that maximizes the agent's scores.
 * `HumanCheckersAgent`: displays the board state and a list of available actions to the command line, and returns the action selected by the user in the command line with each call to `get_action()`
 
 ## Checkers State
