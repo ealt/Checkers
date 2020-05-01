@@ -117,7 +117,7 @@ class AgentTest(unittest.TestCase):
         self.assertEqual(agent.get_action(state), 'b')
 
         state = state.result('a')
-        agent = BFSAgent(score=score, max_depth=2)
+        agent = BFSAgent(score=score, max_depth=3)
         self.assertEqual(agent.get_action(state), 'a')
 
 
